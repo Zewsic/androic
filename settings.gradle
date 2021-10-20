@@ -1,0 +1,2 @@
+rootProject.name = "Androic"
+include ':app'
