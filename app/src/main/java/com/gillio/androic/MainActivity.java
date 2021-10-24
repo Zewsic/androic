@@ -5,8 +5,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.wshunli.assets.CopyAssets;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,21 +24,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView cl = findViewById(R.id.cl);;
-        EditText co = findViewById(R.id.co);
+        cl = findViewById(R.id.cl);;
+        co = findViewById(R.id.co);
         cmds = new ArrayList<String>();
-        exec exa = new exec();
+        exa = new exec();
         build_tools_folder = new File(this.getFilesDir(), "build-tools");
     }
 
 
-    public void c_btn(View view) {
+    public void c_btn(View view) throws IOException {
 
-            cmds.add(new File(this.getFilesDir(), "build-tools").getAbsolutePath());
-            cmds.add("--help");
-            exa.setCommands(cmds);
-            exa.Execute_bin();
-            cl.setText(exa.getLog());
+        //cmds.add(new File(build_tools_folder, "d8").getAbsolutePath());
+        //cmds.add("--version");
+        //exa.setCommands(cmds);
+        cl.setText(exa.Execute_cmd(co.getText().toString()));
+
+        //CopyAssets.with(this)
+        //        .to(this.getFilesDir().getAbsolutePath())
+        //        .copy();
         }
 
 

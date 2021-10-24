@@ -1,16 +1,13 @@
 package com.gillio.androic;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class exec {
 
-    private final ProcessBuilder mProcess = new ProcessBuilder(new String[0]);
-    private final StringWriter mWriter = new StringWriter();
+    public final ProcessBuilder mProcess = new ProcessBuilder();
+    public final StringWriter mWriter = new StringWriter();
 
     public String Execute_cmd(String command) {
 
@@ -36,16 +33,12 @@ public class exec {
     public void setCommands(ArrayList<String> cmds) {
         this.mProcess.command(cmds);
     }
-    public String Execute_bin() {
-        try {
+    public String Execute_bin() throws IOException {
             Scanner scanner = new Scanner(this.mProcess.start().getErrorStream());
             while (scanner.hasNextLine()) {
                 this.mWriter.append(scanner.nextLine());
                 this.mWriter.append(System.lineSeparator());
             }
-        } catch (Exception e) {
-            e.printStackTrace(new PrintWriter(this.mWriter));
-        }
         return this.mWriter.toString();
     }
     public String getLog() {
