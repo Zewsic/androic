@@ -28,19 +28,19 @@ public class MainActivity extends AppCompatActivity {
         co = findViewById(R.id.co);
         cmds = new ArrayList<String>();
         exa = new exec();
-        build_tools_folder = new File(this.getFilesDir(), "build-tools");
+        build_tools_folder = new File("/storage/emulated/0/androic/", "build-tools");
     }
 
 
     public void c_btn(View view) throws IOException {
 
-        //cmds.add(new File(build_tools_folder, "d8").getAbsolutePath());
-        //cmds.add("--version");
-        //exa.setCommands(cmds);
-        cl.setText(exa.Execute_cmd(co.getText().toString()));
+        cmds.add("/system/bin/ls");
+        cmds.add("/storage/emulated/0/");
+        exa.setCommands(cmds);
+        cl.setText(exa.Execute_bin());
 
         //CopyAssets.with(this)
-        //        .to(this.getFilesDir().getAbsolutePath())
+        //        .to("/storage/emulated/0/androic/")
         //        .copy();
         }
 

@@ -34,8 +34,10 @@ public class exec {
         this.mProcess.command(cmds);
     }
     public String Execute_bin() throws IOException {
-            Scanner scanner = new Scanner(this.mProcess.start().getErrorStream());
-            while (scanner.hasNextLine()) {
+        Scanner scanner = null;
+            scanner = new Scanner(this.mProcess.start().getErrorStream());
+
+        while (scanner.hasNextLine()) {
                 this.mWriter.append(scanner.nextLine());
                 this.mWriter.append(System.lineSeparator());
             }
