@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId "com.gillio.androic"
-        minSdkVersion 22
-        targetSdkVersion 28
+        minSdkVersion 26
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
