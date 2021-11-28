@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.gillio.androic"
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -40,5 +40,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.wshunli.android:android-copy-assets:2.2.0'
 }
