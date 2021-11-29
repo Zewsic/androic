@@ -9,16 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import com.gillio.androic.R;
-import com.gillio.androic.compiler.aapt2;
+import com.gillio.androic.compiler.compiler;
+import com.gillio.androic.compiler.ecj;
 import com.gillio.androic.libs.exec;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import com.gillio.androic.compiler.compiler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,16 +67,13 @@ public class MainActivity extends AppCompatActivity {
         //aapt.link(Paths.get("/sdcard/testApp/output/compiled_res.zip"), Paths.get("/sdcard/testApp/output"),
         //        Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/testApp/android.jar"));
 
-        //compiler comp = new compiler(args);
-        //comp.ready(args);
-        //comp.compile();
+        compiler comp = new compiler(Paths.get("/sdcard/testApp/res"), Paths.get("/sdcard/testApp/java"),
+                Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
+                Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home");
 
-        String command =
-                "dalvikvm -Xmx256m -Xcompiler-option --compiler-filter=speed -cp /sdcard/testApp/ecj.jar " +
-                        "org.eclipse.jdt.internal.compiler.batch.Main -proc:none -7 -cp /sdcard/testApp/android.jar " +
-                        "-java_ver 1.7 -nowarn -d /sdcard/testApp/output/javac/ /sdcard/testApp/java/com.zewsic.home/R.java";
+        comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"));
+        comp.compile(cl);
 
-        cl.setText(Runtime.getRuntime().exec(command).toString());
     }
 
 

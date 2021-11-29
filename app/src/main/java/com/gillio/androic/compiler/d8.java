@@ -7,8 +7,8 @@ public class d8 {
 
     Path d8Path;
 
-    public d8(Path aapt2Path) {
-        this.d8Path = aapt2Path;
+    public d8(Path d82Path) {
+        this.d8Path = d8Path;
     }
 
     public String compile(Path inPath, Path outPath, Path androidPath, String package_name) {
