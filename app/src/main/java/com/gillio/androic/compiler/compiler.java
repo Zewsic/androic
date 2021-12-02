@@ -2,6 +2,7 @@ package com.gillio.androic.compiler;
 
 import android.widget.EditText;
 import android.widget.TextView;
+import com.android.tools.r8.CompilationFailedException;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -23,7 +24,7 @@ public class compiler {
 
     public void ready(Path aapt2Path, Path ecjPath) {
         this._aapt2_ = new aapt2(aapt2Path);
-        //this._d8_ = new d8(d8Path);
+        this._d8_ = new d8();
         this._ecj_ = new ecj(ecjPath);
     }
 
@@ -39,11 +40,13 @@ public class compiler {
     }
 
 
-    public void compile(TextView cl) {
+    public void compile(TextView cl) throws IOException, CompilationFailedException {
         _aapt2_.compile(res_path, cache_path);
         _aapt2_.link(cache_path, cache_path, manifest_path, androidJar_path);
-        cl.setText(_ecj_.compile("1024", Paths.get(java_path.toString()+"/"+package_name.replace(".", "/")),
-                 cache_path, androidJar_path));
+        _ecj_.compile("256", Paths.get(java_path.toString()+"/"+package_name.replace(".", "/")),
+                 cache_path, androidJar_path);
+        _d8_.compile(cache_path, cache_path, cache_path, "com.zewsic.home");
+
     }
 }
 

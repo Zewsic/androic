@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
+import com.android.tools.r8.CompilationFailedException;
 import com.gillio.androic.R;
 import com.gillio.androic.compiler.compiler;
 import com.gillio.androic.compiler.d8;
-import com.gillio.androic.compiler.ecj;
 import com.gillio.androic.libs.exec;
 
 import java.io.*;
@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
         exec.quickExec("cp /storage/emulated/0/.androic/build-tools/aapt2 /data/data/com.gillio.androic/build-tools/aapt2");
         exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/aapt2");
 
-        //exec.quickExec("cp /storage/emulated/0/.androic/build-tools/d8 /data/data/com.gillio.androic/build-tools/d8");
-        //exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/d8");
+        exec.quickExec("cp /storage/emulated/0/.androic/build-tools/compiler_libs.jar /data/data/com.gillio.androic/build-tools/compiler_libs.jar");
+        exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/compiler_libs.jar");
 
 
     }
 
-    public void c_btn(View view) throws IOException {
+    public void c_btn(View view) throws IOException, CompilationFailedException {
         //cmds.clear();
         //cmds = new ArrayList<>(Arrays.asList(co.getText().toString().split(" ")));
         //exa.setCommands(cmds);
@@ -71,16 +71,18 @@ public class MainActivity extends AppCompatActivity {
         //aapt.link(Paths.get("/sdcard/testApp/output/compiled_res.zip"), Paths.get("/sdcard/testApp/output"),
         //        Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/testApp/android.jar"));
 
-        //compiler comp = new compiler(Paths.get("/sdcard/testApp/res"), Paths.get("/sdcard/testApp/java"),
-        //        Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
-        //        Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home");
-        //
-        //comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"));
-        //comp.compile(cl);
+        compiler comp = new compiler(Paths.get("/sdcard/testApp/res"), Paths.get("/sdcard/testApp/java"),
+                Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
+                Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home");
 
-        d8 dd = new d8(Paths.get("/sdcard/.androic/build-tools/d8.jar"));
-        dd.compile(Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
-               "com.zewsic.home");
+        comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"));
+        comp.compile(cl);
+
+        //d8 dd = new d8(Paths.get("/sdcard/.androic/build-tools/d8.jar"));
+        //cl.setText(dd.compile(Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
+        //       "com.zewsic.home"));
+
+        //cl.setText(exec.quickExec(co.getText().toString()));
 
     }
 
