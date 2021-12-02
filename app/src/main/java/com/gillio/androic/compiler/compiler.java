@@ -3,6 +3,7 @@ package com.gillio.androic.compiler;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.android.tools.r8.CompilationFailedException;
+import com.gillio.androic.libs.exec;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,7 +23,7 @@ public class compiler {
     private d8 _d8_;
     private ecj _ecj_;
 
-    public void ready(Path aapt2Path, Path ecjPath) {
+    public void ready(Path aapt2Path, Path ecjPath, Path aaptPath) {
         this._aapt2_ = new aapt2(aapt2Path);
         this._d8_ = new d8();
         this._ecj_ = new ecj(ecjPath);
@@ -41,12 +42,19 @@ public class compiler {
 
 
     public void compile(TextView cl) throws IOException, CompilationFailedException {
+        cl.setText("aapt2 is compiling...");
         _aapt2_.compile(res_path, cache_path);
+        cl.setText("aapt2 is linking...");
         _aapt2_.link(cache_path, cache_path, manifest_path, androidJar_path);
-        _ecj_.compile("256", Paths.get(java_path.toString()+"/"+package_name.replace(".", "/")),
-                 cache_path, androidJar_path);
+        cl.setText("ecj is running...");
+        _ecj_.compile("256", Paths.get(java_path.toString() + "/" + package_name.replace(".", "/")),
+                cache_path, androidJar_path);
+        cl.setText("d8 is running...");
         _d8_.compile(cache_path, cache_path, cache_path, "com.zewsic.home");
-
+        cl.setText("aapt2 is adding files...");
+        _aapt2_.add(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/classes.dex"));
+        cl.setText("aapt2 is packing apk...");
+        _aapt2_.pack(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/gen.apk"));
     }
 }
 
