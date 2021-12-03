@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         exec.quickExec("cp /storage/emulated/0/.androic/build-tools/aapt2 /data/data/com.gillio.androic/build-tools/aapt2");
         exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/aapt2");
 
-        exec.quickExec("cp /storage/emulated/0/.androic/build-tools/aapt /data/data/com.gillio.androic/build-tools/aapt");
-        exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/aapt");
+        exec.quickExec("cp /storage/emulated/0/.androic/build-tools/zipAlign /data/data/com.gillio.androic/build-tools/zipAlign");
+        exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/zipAlign");
 
 
 
@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
         compiler comp = new compiler(Paths.get("/sdcard/testApp/res"), Paths.get("/sdcard/testApp/java"),
                 Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
                 Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home");
-        comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"), Paths.get("/data/data/com.gillio.androic/build-tools/aapt"));
+        comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"),
+                Paths.get("/data/data/com.gillio.androic/build-tools/zipAlign"));
         comp.compile(cl);
         //cl.setText(exec.quickExec(co.getText().toString()));
 
