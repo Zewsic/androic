@@ -25,11 +25,11 @@ public class aapt2 {
                 inPath.toString() + " -o " + outPath.toString() + "/compiled_res.zip -v");
     }
 
-    public String link(Path inPath, Path outPath, Path manifestPath, Path androidPath) {
+    public String link(Path inPath, Path outPath, Path java_path, Path manifestPath, Path androidPath) {
         return exec.quickExec(aapt2Path.toString() + " link " + inPath.toString() + "/compiled_res.zip -o " +
                 outPath.toString() + "/gen -I " + androidPath.toString() + " --manifest " +
                 manifestPath.toString() + " --min-sdk-version 21 --target-sdk-version 26 --java " +
-                outPath.toString() + "/../java --output-to-dir -v");
+                java_path.toString() + " --output-to-dir -v");
     }
 
     public String add(Path genFolder, Path file) {
