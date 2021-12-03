@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
     public void c_btn(View view) throws IOException, CompilationFailedException {
         compiler comp = new compiler(Paths.get("/sdcard/testApp/res"), Paths.get("/sdcard/testApp/java"),
                 Paths.get("/sdcard/testApp/AndroidManifest.xml"), Paths.get("/sdcard/.androic/build-tools/android.jar"),
-                Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home");
+                Paths.get("/sdcard/testApp/cache"), Paths.get("/sdcard/testApp/output"), "com.zewsic.home", Paths.get("/sdcard/.androic/build-tools"));
         comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"),
-                Paths.get("/data/data/com.gillio.androic/build-tools/zipAlign"));
+                Paths.get("/data/data/com.gillio.androic/build-tools/zipAlign"), Paths.get("/sdcard/.androic/build-tools/apkSigner.jar"));
         comp.compile(cl);
         //cl.setText(exec.quickExec(co.getText().toString()));
 
