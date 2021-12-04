@@ -1,5 +1,6 @@
 package com.gillio.androic.compiler;
 
+import android.util.Log;
 import com.gillio.androic.libs.exec;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class d8 {
 
     public String compile(Path inPath, Path outPath, Path androidPath, String package_name) throws IOException, CompilationFailedException {
         Collection<Path> programFiles = new ArrayList<>();
+        Log.i("a", new File(inPath.toString() + "/class/"+package_name.replace(".", "/") + "/").getAbsolutePath());
         for ( File file : new File(inPath.toString() + "/class/"+package_name.replace(".", "/") + "/").listFiles() ){
             if ( file.isFile() )
                 programFiles.add(file.toPath());
