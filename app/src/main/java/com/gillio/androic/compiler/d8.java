@@ -15,25 +15,25 @@ import com.android.tools.r8.CompilationMode;
 import com.android.tools.r8.D8;
 import com.android.tools.r8.D8Command;
 import com.android.tools.r8.OutputMode;
+import com.gillio.androic.libs.utils;
 
 
 public class d8 {
 
 
-    public String compile(Path inPath, Path outPath, Path androidPath, String package_name) throws IOException, CompilationFailedException {
-        Collection<Path> programFiles = new ArrayList<>();
-        Log.i("a", new File(inPath.toString() + "/class/"+package_name.replace(".", "/") + "/").getAbsolutePath());
-        for ( File file : new File(inPath.toString() + "/class/"+package_name.replace(".", "/") + "/").listFiles() ){
-            if ( file.isFile() )
-                programFiles.add(file.toPath());
-        }
-//
+    public String compile(Path inPath, Path outPath, Path androidPath) throws IOException, CompilationFailedException {
+
+        String filesList = "";
+        utils util = new utils();
+        util.getFiles(inPath);
+        ArrayList<Path> all_files = util.files_list;
+
             D8.run(D8Command.builder()
                     .setMode(CompilationMode.RELEASE)
                     .setIntermediate(true)
                     .setMinApiLevel(21)
                     .setOutput(Paths.get(outPath.toString()), OutputMode.DexIndexed)
-                    .addProgramFiles(programFiles)
+                    .addProgramFiles(all_files)
                     .build());
 
         return "";

@@ -42,7 +42,7 @@
                         android:text="Теперь вы можете компилировать APK файлы из исходников прямо на своем устройстве!"
                         android:layout_width="197dp"
                         android:layout_height="wrap_content" android:id="@+id/NewsText" android:textColor="#000000"
-                        android:textStyle="bold" android:textSize="14sp"/>
+                        android:textStyle="bold" android:textSize="14sp" android:layout_marginTop="25px"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -71,7 +71,7 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="266dp" android:background="#FFFFFF" android:id="@+id/compiler_"
+                    android:layout_height="wrap_content" android:background="#FFFFFF" android:id="@+id/compiler_"
                     android:padding="20px">
                 <TextView
                         android:text="Компилировать"
@@ -128,31 +128,23 @@
                                 android:textColor="#000000" android:textStyle="bold"
                                 android:gravity="center_horizontal"/>
                     </LinearLayout>
-                    <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" android:layout_weight="1">
-                        <ImageButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="88dp" app:srcCompat="@drawable/ic_launcher_foreground"
-                                android:id="@+id/AFbtn"/>
-                        <TextView
-                                android:text="Android.jar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/textView5"
-                                android:textColor="#000000" android:textStyle="bold"
-                                android:gravity="center_horizontal"/>
-                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:gravity="bottom|center_horizontal">
+                    <Button
+                            android:text="Начать компиляцию"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/c_btn"
+                            android:onClick="c_btn"
+                            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" android:layout_gravity="bottom"
+                            android:background="#00FFFFFF" android:textColor="#000000" android:paddingBottom="0px"
+                            android:padding="4px" android:gravity="bottom" android:backgroundTint="#00FFFFFF"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <Button
-                android:text="Compile!"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/c_btn"
-                android:onClick="c_btn"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

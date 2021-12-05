@@ -1,5 +1,6 @@
 package com.gillio.androic.compiler;
 
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.android.tools.r8.CompilationFailedException;
@@ -28,6 +29,7 @@ public class compiler {
     private apkSigner _apkSigner_;
 
     public void ready(Path aapt2Path, Path ecjPath, Path zipAlignPath, Path apkSignerPath) {
+
         exec.quickExec("mkdir /storage/emulated/0/"+app_Path+"/projects");
         exec.quickExec("mkdir /storage/emulated/0/"+app_Path+"/projects/" + package_name);
         exec.quickExec("mkdir /storage/emulated/0/"+app_Path+"/projects/" + package_name + "/cache");
@@ -58,17 +60,22 @@ public class compiler {
 
 
     public void compile(TextView cl) throws IOException, CompilationFailedException {
-        _aapt2_.compile(res_path, cache_path);
-        _aapt2_.link(cache_path, cache_path, java_path, manifest_path, androidJar_path);
-        cl.setText(_ecj_.compile("256", Paths.get(java_path.toString() + "/" + package_name.replace(".", "/")),
-                cache_path, androidJar_path));
-        _d8_.compile(cache_path, cache_path, cache_path, "com.zewsic.home");
-        _aapt2_.add(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/classes.dex"));
-        _aapt2_.pack(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/gen.apk"));
-        _zipAlign_.align(Paths.get(cache_path.toString() + "/gen.apk"),
-                Paths.get(cache_path.toString() + "/gen_aligned.apk"));
-        _apkSigner_.sign(Paths.get(cache_path.toString() + "/gen_aligned.apk"),
-                        Paths.get(output_path.toString() + "/gen_signed.apk"), keyStorePath);
+        try {
+            cl.setText(_aapt2_.compile(res_path, cache_path));
+            cl.setText(_aapt2_.link(cache_path, cache_path, java_path, manifest_path, androidJar_path));
+            cl.setText(_ecj_.compile("256", Paths.get(java_path.toString() + "/"),
+                    cache_path, androidJar_path));
+            cl.setText(_d8_.compile(cache_path, cache_path, cache_path));
+            cl.setText(_aapt2_.add(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/classes.dex")));
+            cl.setText(_aapt2_.pack(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/gen.apk")));
+            cl.setText(_zipAlign_.align(Paths.get(cache_path.toString() + "/gen.apk"),
+                    Paths.get(cache_path.toString() + "/gen_aligned.apk")));
+            cl.setText(_apkSigner_.sign(Paths.get(cache_path.toString() + "/gen_aligned.apk"),
+                    Paths.get(output_path.toString() + "/gen_signed.apk"), keyStorePath));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView cl;
     EditText co;
+    Button start_compile;
     ArrayList<String> cmds;
     exec exa;
     File build_tools_folder;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         cl = findViewById(R.id.cl);
         co = findViewById(R.id.co);
+        start_compile = findViewById(R.id.c_btn);
         cmds = new ArrayList<>();
         exa = new exec();
         build_tools_folder = new File("/data/data/com.gillio.androic/build-tools/");
@@ -78,12 +81,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void c_btn(View view) throws IOException, CompilationFailedException {
+        int id = (int)((Math.random()*((1000-1)+1))+1);
+        String project_id = Integer.toString(id);
+        start_compile.setText("Компиляция, подождите...");
+
         compiler comp = new compiler(Paths.get(res_path), Paths.get(java_path),
                 Paths.get(manifest_path), Paths.get(androidJar_path),
-                ".androic",  package_name, Paths.get("/sdcard/.androic/build-tools"));
+                ".androic",  project_id, Paths.get("/sdcard/.androic/build-tools"));
         comp.ready(Paths.get("/data/data/com.gillio.androic/build-tools/aapt2"), Paths.get("/sdcard/.androic/build-tools/ecj.jar"),
                 Paths.get("/data/data/com.gillio.androic/build-tools/zipAlign"), Paths.get("/sdcard/.androic/build-tools/apkSigner.jar"));
         comp.compile(cl);
+
+        start_compile.setText("Готово! ID: "+project_id);
         //cl.setText(exec.quickExec(co.getText().toString()));
 
     }
@@ -130,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                                 "/content:/com.android.externalstorage.documents/tree/primary", "/sdcard");
                 break;
             case 3:
-                manifest_path = Paths.get(data.getData().toString()).toFile().getAbsolutePath().replace(
-                        "/content:/com.android.externalstorage.documents/tree/primary", "/sdcard");
+                manifest_path = Paths.get(data.getData().toString()).toFile().getAbsolutePath().
+                        replace("%3A", "/").replace("%2F", "/").replace(
+                                "/content:/com.android.externalstorage.documents/document/primary", "/sdcard");
                 break;
         }
     }
