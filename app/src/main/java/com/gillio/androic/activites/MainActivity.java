@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -122,6 +123,17 @@ public class MainActivity extends AppCompatActivity {
         chooseFile = Intent.createChooser(chooseFile, "Выберите файл AndroidManifest.xml");
         startActivityForResult(chooseFile, 3);
     }
+
+    public void openYT(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com"));
+        startActivity(browserIntent);
+    }
+
+    public void openVK(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/gillio"));
+        startActivity(browserIntent);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
