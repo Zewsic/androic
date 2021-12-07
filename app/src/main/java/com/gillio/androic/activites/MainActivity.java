@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         cl = findViewById(R.id.cl);
         co = findViewById(R.id.co);
-        start_compile = findViewById(R.id.c_btn);
+        start_compile = findViewById(R.id.compile_btn);
         cmds = new ArrayList<>();
         exa = new exec();
         build_tools_folder = new File("/data/data/com.gillio.androic/build-tools/");
@@ -72,19 +72,31 @@ public class MainActivity extends AppCompatActivity {
         exec.quickExec("chmod 777 /data/data/com.gillio.androic/build-tools/zipAlign");
 
 
-        round(findViewById(R.id.Body), 90, "#8000FF");
-        round(findViewById(R.id.ytLink), 15, "#CF0404");
-        round(findViewById(R.id.vkLink), 15, "#5181B8");
-        round(findViewById(R.id.news_text), 20, "#FFFFFF");
-        round(findViewById(R.id.compiler_), 20, "#FFFFFF");
+        round(findViewById(R.id.Body), 90, "#1f1f1f");
+        round(findViewById(R.id.get_m), 20, "#2f2f2f");
+        round(findViewById(R.id.get_j), 20, "#2f2f2f");
+        round(findViewById(R.id.get_r), 20, "#2f2f2f");
+        round(findViewById(R.id.compile_btn), 20, "#2f2f2f");
 
 
     }
 
     public void c_btn(View view) throws IOException, CompilationFailedException {
+        if (manifest_path == "/") {
+            start_compile.setText("Manifest file not specified");
+            return;
+        }
+        if (java_path == "/") {
+            start_compile.setText("Java folder not specified");
+            return;
+        }
+        if (res_path == "/") {
+            start_compile.setText("Res folder not specified");
+            return;
+        }
         int id = (int)((Math.random()*((1000-1)+1))+1);
         String project_id = Integer.toString(id);
-        start_compile.setText("Компиляция, подождите...");
+        start_compile.setText("Compiling, please wait...");
 
         compiler comp = new compiler(Paths.get(res_path), Paths.get(java_path),
                 Paths.get(manifest_path), Paths.get(androidJar_path),
@@ -93,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 Paths.get("/data/data/com.gillio.androic/build-tools/zipAlign"), Paths.get("/sdcard/.androic/build-tools/apkSigner.jar"));
         comp.compile(cl);
 
-        start_compile.setText("Готово! ID: "+project_id);
+        start_compile.setText("OK! ID: "+project_id);
         //cl.setText(exec.quickExec(co.getText().toString()));
 
     }
@@ -122,16 +134,6 @@ public class MainActivity extends AppCompatActivity {
         chooseFile.setType("*/*");
         chooseFile = Intent.createChooser(chooseFile, "Выберите файл AndroidManifest.xml");
         startActivityForResult(chooseFile, 3);
-    }
-
-    public void openYT(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com"));
-        startActivity(browserIntent);
-    }
-
-    public void openVK(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/gillio"));
-        startActivity(browserIntent);
     }
 
 

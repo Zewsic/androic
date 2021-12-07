@@ -25,7 +25,7 @@ public class d8 {
 
         String filesList = "";
         utils util = new utils();
-        util.getFiles(inPath);
+        util.getFiles(Paths.get(inPath.toString() + "/class"));
         ArrayList<Path> all_files = util.files_list;
 
             D8.run(D8Command.builder()

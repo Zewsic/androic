@@ -65,7 +65,7 @@ public class compiler {
             cl.setText(_aapt2_.link(cache_path, cache_path, java_path, manifest_path, androidJar_path));
             cl.setText(_ecj_.compile("256", Paths.get(java_path.toString() + "/"),
                     cache_path, androidJar_path));
-            cl.setText(_d8_.compile(cache_path, cache_path, cache_path));
+            cl.setText(_d8_.compile(cache_path, cache_path, androidJar_path));
             cl.setText(_aapt2_.add(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/classes.dex")));
             cl.setText(_aapt2_.pack(Paths.get(cache_path.toString() + "/gen"), Paths.get(cache_path.toString() + "/gen.apk")));
             cl.setText(_zipAlign_.align(Paths.get(cache_path.toString() + "/gen.apk"),
